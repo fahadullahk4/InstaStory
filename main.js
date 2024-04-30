@@ -30,7 +30,7 @@ var stories = document.querySelector(".stories");
 var fullScreen = document.querySelector(".full-screen");
 var bar = document.querySelector(".progress-bar");
 var clutter = "";
-var count = 0;
+let progressInterval;
 arr.forEach((elem, idx) => {
 	clutter += `<div class="story">
 						<img id = "${idx}" src="${elem.dp}" alt="" />
@@ -42,23 +42,21 @@ stories.addEventListener("click", (dets) => {
 	fullScreen.style.display = "block";
 	fullScreen.style.backgroundImage = `url(${arr[dets.target.id].story})`;
 
-	if (count == 0) {
-		count = 1;
-		var width = 1;
-		var time = setInterval(() => {
-			if (width >= 100) {
-				clearInterval(time);
-				count = 0;
-			} else {
-				width++;
-				bar.style.width = width + "%";
-			}
-		}, 22.5);
-	}
+	bar.style.width = "0%";
+	startProgressBar();
 	setTimeout(() => {
 		fullScreen.style.display = "none";
 	}, 2500);
 });
-fullScreen.addEventListener("click", () => {
-	fullScreen.style.display = "none";
-});
+
+function startProgressBar() {
+	let width = 0;
+	progressInterval = setInterval(() => {
+		if (width >= 100) {
+			clearInterval(progressInterval);
+		} else {
+			width++;
+			bar.style.width = width + "%";
+		}
+	}, 22.5);
+}
