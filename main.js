@@ -48,7 +48,7 @@ stories.addEventListener("click", (dets) => {
 		var time = setInterval(() => {
 			if (width >= 100) {
 				clearInterval(time);
-				width = 0;
+				count = 0;
 			} else {
 				width++;
 				bar.style.width = width + "%";
